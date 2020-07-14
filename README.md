@@ -46,7 +46,7 @@
 - [Installation](#installation)
 
 ## Features
-- __Common approach:__ shared object throughout SMBC estate
+- __Common approach:__ shared logic relating to shared objects used throughout SMBC estate
 
 ## Philosophy
 How much logic have we repeated that could be shared between our services. This package aims to provide a place for this logic to be stored. Reducing code duplication, improving consistency, and overall improving maintainability of our products.
