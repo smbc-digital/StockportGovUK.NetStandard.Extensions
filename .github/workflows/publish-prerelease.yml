@@ -21,7 +21,7 @@ jobs:
         
       # Pack
       - name: Package project
-        run: dotnet pack --configuration Release --version-suffix prerelease
+        run: dotnet pack --configuration Release --version-suffix prerelease-$GITHUB_RUN_NUMBER
 
       # Publish
       - name: Publish the package
