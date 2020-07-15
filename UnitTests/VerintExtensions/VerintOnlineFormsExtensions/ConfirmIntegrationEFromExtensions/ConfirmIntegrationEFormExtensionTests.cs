@@ -1,8 +1,8 @@
-﻿using StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions;
+﻿using StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationEFromExtensions;
 using StockportGovUK.NetStandard.Models.Verint;
 using Xunit;
 
-namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions
+namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationEFromExtensions
 {
     public class ConfirmIntegrationEFormExtensionTests
     {
@@ -14,7 +14,7 @@ namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions
                 Customer = new Customer()
             };
 
-            var configuration = new ConfirmIntegrationEFormExtension.ConfirmIntegrationEFormConfiguration
+            var configuration = new ConfirmIntegrationEFormOptions
             {
                 EventId = 1
             };
