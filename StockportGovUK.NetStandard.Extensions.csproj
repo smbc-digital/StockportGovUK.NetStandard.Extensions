@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>StockportGovUK.NetStandard.Extensions</PackageId>
+    <Title>A package that provides shared logic for shared models for StockportGovUK applications</Title>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Authors>Colin Lees, Jon Chiles, Jon Hadley</Authors>
+    <Company>Stockport Council</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StockportGovUK.NetStandard.Models" Version="1.0.12" />
+  </ItemGroup>
+
+</Project>
