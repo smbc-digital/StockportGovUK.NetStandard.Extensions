@@ -9,9 +9,6 @@
 <div align="center">
     Shared logic relating to shared objects used within SMBC
 </div>
-<div align="center">
-    <a href="https://www.nuget.org/packages/StockportGovUK.NetStandard.Extensions/">NuGet</a>
-</div>
 
 <br />
 
