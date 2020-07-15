@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockportGovUK.NetStandard.Extensions", "StockportGovUK.NetStandard.Extensions.csproj", "{DB0D48E2-3174-4C46-884A-9EA9A052D287}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{9F6E3A4C-E07F-480B-B350-263B54CECC4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockportGovUK.NetStandard.Extensions", "src\StockportGovUK.NetStandard.Extensions.csproj", "{DCEFE64A-10C9-42B7-9476-22296CACA34F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DB0D48E2-3174-4C46-884A-9EA9A052D287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB0D48E2-3174-4C46-884A-9EA9A052D287}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB0D48E2-3174-4C46-884A-9EA9A052D287}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB0D48E2-3174-4C46-884A-9EA9A052D287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F6E3A4C-E07F-480B-B350-263B54CECC4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F6E3A4C-E07F-480B-B350-263B54CECC4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F6E3A4C-E07F-480B-B350-263B54CECC4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F6E3A4C-E07F-480B-B350-263B54CECC4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCEFE64A-10C9-42B7-9476-22296CACA34F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCEFE64A-10C9-42B7-9476-22296CACA34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCEFE64A-10C9-42B7-9476-22296CACA34F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCEFE64A-10C9-42B7-9476-22296CACA34F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
