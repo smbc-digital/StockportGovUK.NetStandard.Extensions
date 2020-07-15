@@ -2,7 +2,7 @@
 using StockportGovUK.NetStandard.Models.Verint;
 using System.Collections.Generic;
 
-namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions
+namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationEFromExtensions
 {
     public static class ConfirmIntegrationEFormExtension
     {
@@ -16,8 +16,10 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
         /// <param name="crmCase"></param>
         /// <param name="configuration"></param>
         /// <returns>VerintOnlineFormRequest</returns>
-        public static VerintOnlineFormRequest ToConfirmIntegrationEFormCase(this Case crmCase, ConfirmIntegrationEFormConfiguration configuration)
+        public static VerintOnlineFormRequest ToConfirmIntegrationEFormCase(this Case crmCase, ConfirmIntegrationEFormOptions configuration)
         {
+            crmCase.EventCode = configuration.EventId;
+            
             var formData = new Dictionary<string, string>
                 {
                     {"CONF_SERVICE_CODE", configuration.ServiceCode},
@@ -130,28 +132,12 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
             }
 
-            crmCase.EventCode = configuration.EventId;
-
             return new VerintOnlineFormRequest
             {
                 VerintCase = crmCase,
                 FormName = VOFName,
                 FormData = formData
             };
-        }
-
-        /// <summary>
-        /// Object that's only use will be for providing required information to ToConfirmIntegrationEFormCase extension
-        /// method. This object should be populated from the configuration file of a service that wants to use this
-        /// extension method.
-        /// </summary>
-        public class ConfirmIntegrationEFormConfiguration
-        {
-            public string ServiceCode { get; set; }
-            public string SubjectCode { get; set; }
-            public string FollowUp { get; set; }
-            public string ClassCode { get; set; }
-            public int EventId { get; set; }
         }
     }
 }
