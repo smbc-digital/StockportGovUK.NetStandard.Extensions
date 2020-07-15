@@ -35,8 +35,9 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     {"CONF_CUST_ALT_TEL", crmCase.Customer.AlternativeTelephone},
                     {"CONF_CUST_FAX", crmCase.Customer.FaxNumber},
                     {"CONF_CUST_EMAIL", crmCase.Customer.Email},
-                    {"CONF_CLASSIFICATION", crmCase.Classification},
-                    {" CONF_DESC", crmCase.Description}
+                    {"CONF_DESC", crmCase.Description},
+                    {"le_eventcode", configuration.EventId.ToString()},
+                    {"le_queue_complete", "AppsConfirmQueuePending"},
                 };
 
             if (crmCase.IsSMBCEmployee)
@@ -131,6 +132,10 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 if (siteDetails.Length > 2)
                     formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
             }
+
+            foreach (var key in formData.Keys)
+                if (string.IsNullOrEmpty(formData[key]))
+                    formData.Remove(key);
 
             return new VerintOnlineFormRequest
             {
