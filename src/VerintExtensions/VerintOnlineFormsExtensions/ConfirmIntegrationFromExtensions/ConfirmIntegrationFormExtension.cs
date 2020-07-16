@@ -26,6 +26,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     {"CONF_SUBJECT_CODE", configuration.SubjectCode},
                     {"FOLLOW_UP_BY", configuration.FollowUp},
                     {"CboClassCode", configuration.ClassCode},
+                    {"CONF_CLASSIFICATION", configuration.ConfirmClassification},
                     {"CONF_CASE_ID", crmCase.CaseReference},
                     {"CONF_CUST_REF", crmCase.Customer.CustomerReference},
                     {"CONF_CUST_TITLE", crmCase.Customer.Title},
