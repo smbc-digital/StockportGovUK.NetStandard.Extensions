@@ -101,7 +101,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
 
                 var addressDetails = crmCase.Customer.Address.Description.Split(',');
-
+              
                 formData.Add("CONF_CUST_LOCALITY", addressDetails[0].Trim());
                 if (addressDetails.Length > 1)
                     formData.Add("CONF_CUST_TOWN", addressDetails[1].Trim());
