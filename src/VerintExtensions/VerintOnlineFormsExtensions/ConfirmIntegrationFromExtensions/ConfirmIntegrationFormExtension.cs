@@ -1,5 +1,6 @@
 ﻿using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
 using StockportGovUK.NetStandard.Models.Verint;
+using System;
 using System.Collections.Generic;
 
 namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
@@ -96,7 +97,10 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
 
             if (crmCase.Customer.Address != null)
             {
-                var addressDetails = crmCase.Customer.Address.ToString().Split(',');
+                if (string.IsNullOrEmpty(crmCase.Customer.Address.Description))
+                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
+
+                var addressDetails = crmCase.Customer.Address.Description.Split(',');
 
                 formData.Add("CONF_CUST_LOCALITY", addressDetails[0].Trim());
                 if (addressDetails.Length > 1)
@@ -119,10 +123,13 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
             }
             else if (crmCase.Street != null)
             {
+                if (string.IsNullOrEmpty(crmCase.Street.Description))
+                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
+
+                var siteDetails = crmCase.Street.Description.Split(',');
+
                 formData.Add("CONF_SITE_CODE", crmCase.Street.USRN);
                 formData.Add("CONF_LOCATION", crmCase.FurtherLocationInformation);
-
-                var siteDetails = crmCase.Street.ToString().Split(',');
                 formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
                 if (siteDetails.Length > 1)
                     formData.Add("CONF_SITE_LOCALITY", siteDetails[1].Trim());
@@ -141,7 +148,5 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 FormData = formData
             };
         }
-
-
     }
 }
