@@ -10,7 +10,7 @@
         /// <summary>
         /// Used as the objects configurations name in config and startup of projects
         /// </summary>
-        public const string ConfirmIntegrationEForm = "ConfirmIntegrationEFormOptions";
+        public const string ConfirmIntegrationForm = "ConfirmIntegrationFormOptions";
         public string ServiceCode { get; set; }
         public string SubjectCode { get; set; }
         public string FollowUp { get; set; }
