@@ -1,10 +1,11 @@
 ﻿using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
 using StockportGovUK.NetStandard.Models.Verint;
+using System;
 using System.Collections.Generic;
 
-namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions
+namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
 {
-    public static class ConfirmIntegrationEFormExtension
+    public static class ConfirmIntegrationFormExtension
     {
         private const string VOFName = "confirm_integrationform";
 
@@ -16,14 +17,17 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
         /// <param name="crmCase"></param>
         /// <param name="configuration"></param>
         /// <returns>VerintOnlineFormRequest</returns>
-        public static VerintOnlineFormRequest ToConfirmIntegrationEFormCase(this Case crmCase, ConfirmIntegrationEFormConfiguration configuration)
+        public static VerintOnlineFormRequest ToConfirmIntegrationFormCase(this Case crmCase, ConfirmIntegrationFormOptions configuration)
         {
+            crmCase.EventCode = configuration.EventId;
+            
             var formData = new Dictionary<string, string>
                 {
                     {"CONF_SERVICE_CODE", configuration.ServiceCode},
                     {"CONF_SUBJECT_CODE", configuration.SubjectCode},
                     {"FOLLOW_UP_BY", configuration.FollowUp},
                     {"CboClassCode", configuration.ClassCode},
+                    {"CONF_CLASSIFICATION", configuration.ConfirmClassification},
                     {"CONF_CASE_ID", crmCase.CaseReference},
                     {"CONF_CUST_REF", crmCase.Customer.CustomerReference},
                     {"CONF_CUST_TITLE", crmCase.Customer.Title},
@@ -33,8 +37,9 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     {"CONF_CUST_ALT_TEL", crmCase.Customer.AlternativeTelephone},
                     {"CONF_CUST_FAX", crmCase.Customer.FaxNumber},
                     {"CONF_CUST_EMAIL", crmCase.Customer.Email},
-                    {"CONF_CLASSIFICATION", crmCase.Classification},
-                    {" CONF_DESC", crmCase.Description}
+                    {"CONF_DESC", crmCase.Description},
+                    {"le_eventcode", configuration.EventId.ToString()},
+                    {"le_queue_complete", "AppsConfirmQueuePending"},
                 };
 
             if (crmCase.IsSMBCEmployee)
@@ -92,19 +97,18 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
 
             if (crmCase.Customer.Address != null)
             {
-                if (int.TryParse(crmCase.Customer.Address.Number, out var streetNum))
-                {
-                    formData.Add("CONF_CUST_STREETNUM", crmCase.Customer.Address.Number);
-                }
-                else
-                {
-                    formData.Add("CONF_CUST_BUILDING", crmCase.Customer.Address.Number);
-                }
+                if (string.IsNullOrEmpty(crmCase.Customer.Address.Description))
+                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
 
-                formData.Add("CONF_CUST_STREET", crmCase.Customer.Address.AddressLine1);
-                formData.Add("CONF_CUST_LOCALITY", crmCase.Customer.Address.AddressLine3);
-                formData.Add("CONF_CUST_TOWN", crmCase.Customer.Address.City);
-                formData.Add("CONF_CUST_POSTCODE", crmCase.Customer.Address.Postcode);
+                var addressDetails = crmCase.Customer.Address.Description.Split(',');
+              
+                formData.Add("CONF_CUST_LOCALITY", addressDetails[0].Trim());
+                if (addressDetails.Length > 1)
+                    formData.Add("CONF_CUST_TOWN", addressDetails[1].Trim());
+                if (addressDetails.Length > 2)
+                    formData.Add("CONF_CUST_COUNTY", addressDetails[2].Trim());
+                if (addressDetails.Length > 3)
+                    formData.Add("CONF_CUST_POSTCODE", addressDetails[3].Trim());
             }
 
             if (crmCase.Property != null)
@@ -119,10 +123,13 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
             }
             else if (crmCase.Street != null)
             {
+                if (string.IsNullOrEmpty(crmCase.Street.Description))
+                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
+
+                var siteDetails = crmCase.Street.Description.Split(',');
+
                 formData.Add("CONF_SITE_CODE", crmCase.Street.USRN);
                 formData.Add("CONF_LOCATION", crmCase.FurtherLocationInformation);
-
-                string[] siteDetails = crmCase.Street.Description.Split(',');
                 formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
                 if (siteDetails.Length > 1)
                     formData.Add("CONF_SITE_LOCALITY", siteDetails[1].Trim());
@@ -130,7 +137,9 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
             }
 
-            crmCase.EventCode = configuration.EventId;
+            foreach (var key in formData.Keys)
+                if (string.IsNullOrEmpty(formData[key]))
+                    formData.Remove(key);
 
             return new VerintOnlineFormRequest
             {
@@ -138,20 +147,6 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 FormName = VOFName,
                 FormData = formData
             };
-        }
-
-        /// <summary>
-        /// Object that's only use will be for providing required information to ToConfirmIntegrationEFormCase extension
-        /// method. This object should be populated from the configuration file of a service that wants to use this
-        /// extension method.
-        /// </summary>
-        public class ConfirmIntegrationEFormConfiguration
-        {
-            public string ServiceCode { get; set; }
-            public string SubjectCode { get; set; }
-            public string FollowUp { get; set; }
-            public string ClassCode { get; set; }
-            public int EventId { get; set; }
         }
     }
 }

@@ -1,4 +1,4 @@
-name: publish to nuget
+name: Publish
 on:
   push:
     branches:
@@ -18,11 +18,15 @@ jobs:
       # Build
       - name: Build project
         run: dotnet build
+
+      # Test
+      - name: Test project
+        run: dotnet test
         
       # Pack
       - name: Package project
         run: dotnet pack --configuration Release
 
       # Publish
-      - name: Publish the package
-        run: dotnet nuget push bin/Release/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://nuget.org
+      - name: Publish project
+        run: dotnet nuget push src/bin/Release/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://nuget.org
