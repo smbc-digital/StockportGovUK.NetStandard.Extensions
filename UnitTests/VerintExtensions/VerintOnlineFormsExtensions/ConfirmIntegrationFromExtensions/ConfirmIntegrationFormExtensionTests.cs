@@ -23,7 +23,7 @@ namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrat
 
             Assert.NotNull(result);
             Assert.NotEmpty(result.FormData);
-            Assert.Equal("confirm_integrationform", result.FormName);
+            Assert.Equal("confirm_universalform", result.FormName);
         }
     }
 }
