@@ -7,7 +7,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
 {
     public static class ConfirmIntegrationFormExtension
     {
-        private const string VOFName = "confirm_integrationform";
+        private const string VOFName = "confirm_universalform";
 
         /// <summary>
         /// An extension method to create an instance of VerintOnlineFormRequest that will be used to
