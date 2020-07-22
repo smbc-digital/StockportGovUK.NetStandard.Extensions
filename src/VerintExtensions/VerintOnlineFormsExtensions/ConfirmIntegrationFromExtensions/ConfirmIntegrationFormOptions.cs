@@ -15,7 +15,6 @@
         public string SubjectCode { get; set; }
         public string FollowUp { get; set; }
         public string ClassCode { get; set; }
-        public string ConfirmClassification { get; set; }
         public int EventId { get; set; }
     }
 }
