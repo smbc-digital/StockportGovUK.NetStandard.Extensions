@@ -27,7 +27,8 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     {"CONF_SUBJECT_CODE", configuration.SubjectCode},
                     {"FOLLOW_UP_BY", configuration.FollowUp},
                     {"CboClassCode", configuration.ClassCode},
-                    {"CONF_CLASSIFICATION", configuration.ConfirmClassification},
+                    {"le_eventcode", configuration.EventId.ToString()},
+                    {"le_queue_complete", "AppsConfirmQueuePending"},
                     {"CONF_CASE_ID", crmCase.CaseReference},
                     {"CONF_CUST_REF", crmCase.Customer.CustomerReference},
                     {"CONF_CUST_TITLE", crmCase.Customer.Title},
@@ -38,8 +39,6 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     {"CONF_CUST_FAX", crmCase.Customer.FaxNumber},
                     {"CONF_CUST_EMAIL", crmCase.Customer.Email},
                     {"CONF_DESC", crmCase.Description},
-                    {"le_eventcode", configuration.EventId.ToString()},
-                    {"le_queue_complete", "AppsConfirmQueuePending"},
                 };
 
             if (crmCase.IsSMBCEmployee)
@@ -113,10 +112,17 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
 
             if (crmCase.Property != null)
             {
+                if (string.IsNullOrEmpty(crmCase.Property.Description))
+                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Property.Description is required within Confirm.");
+
+                var siteDetails = crmCase.Property.Description.Split(',');
+
                 formData.Add("CONF_SITE_CODE", crmCase.Property.USRN);
-                formData.Add("CONF_SITE_NAME", crmCase.Property.AddressLine1);
-                formData.Add("CONF_SITE_LOCALITY", crmCase.Property.AddressLine3);
-                formData.Add("CONF_SITE_TOWN", crmCase.Property.City);
+                formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
+                if (siteDetails.Length > 1)
+                    formData.Add("CONF_SITE_LOCALITY", siteDetails[1].Trim());
+                if (siteDetails.Length > 2)
+                    formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
                 formData.Add("CONF_LOCATION", string.IsNullOrEmpty(crmCase.FurtherLocationInformation)
                     ? crmCase.Property.Description
                     : $"{crmCase.Property.Description} - {crmCase.FurtherLocationInformation}");
