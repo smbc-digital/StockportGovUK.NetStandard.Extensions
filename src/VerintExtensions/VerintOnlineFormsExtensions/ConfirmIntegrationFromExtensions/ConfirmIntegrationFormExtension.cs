@@ -101,7 +101,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
 
                 var addressDetails = crmCase.Customer.Address.Description.Split(',');
               
-                formData.Add("CONF_CUST_LOCALITY", addressDetails[0].Trim());
+                formData.Add("CONF_CUST_BUILDING", addressDetails[0].Trim());
                 if (addressDetails.Length > 1)
                     formData.Add("CONF_CUST_TOWN", addressDetails[1].Trim());
                 if (addressDetails.Length > 2)
@@ -120,7 +120,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_SITE_CODE", crmCase.Property.USRN);
                 formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
                 if (siteDetails.Length > 1)
-                    formData.Add("CONF_SITE_LOCALITY", siteDetails[1].Trim());
+                    formData.Add("CONF_SITE_BUILDING", siteDetails[1].Trim());
                 if (siteDetails.Length > 2)
                     formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
                 formData.Add("CONF_LOCATION", string.IsNullOrEmpty(crmCase.FurtherLocationInformation)
@@ -138,7 +138,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_LOCATION", crmCase.FurtherLocationInformation);
                 formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
                 if (siteDetails.Length > 1)
-                    formData.Add("CONF_SITE_LOCALITY", siteDetails[1].Trim());
+                    formData.Add("CONF_SITE_BUILDING", siteDetails[1].Trim());
                 if (siteDetails.Length > 2)
                     formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
             }
