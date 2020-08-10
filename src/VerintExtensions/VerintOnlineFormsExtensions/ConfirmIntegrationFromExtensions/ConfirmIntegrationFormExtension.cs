@@ -39,6 +39,8 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     {"CONF_CUST_FAX", crmCase.Customer.FaxNumber},
                     {"CONF_CUST_EMAIL", crmCase.Customer.Email},
                     {"CONF_DESC", crmCase.Description},
+                    {"CONF_LOGGED_BY", "Lagan"},
+                    {"CONF_LOGGED_TIME", DateTime.Now.ToString()},
                 };
 
             if (crmCase.IsSMBCEmployee)
