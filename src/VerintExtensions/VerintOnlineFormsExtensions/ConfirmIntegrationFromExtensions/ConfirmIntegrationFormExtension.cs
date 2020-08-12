@@ -112,22 +112,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     formData.Add("CONF_CUST_POSTCODE", addressDetails[3].Trim());
             }
 
-            if (crmCase.Street != null)
-            {
-                if (string.IsNullOrEmpty(crmCase.Street.Description))
-                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
-
-                var siteDetails = crmCase.Street.Description.Split(',');
-
-                formData.Add("CONF_SITE_CODE", crmCase.Street.USRN);
-                formData.Add("CONF_LOCATION", crmCase.FurtherLocationInformation);
-                formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
-                if (siteDetails.Length > 1)
-                    formData.Add("CONF_SITE_BUILDING", siteDetails[1].Trim());
-                if (siteDetails.Length > 2)
-                    formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
-            }
-            else if (crmCase.Property != null)
+            if (crmCase.Property != null)
             {
                 if (string.IsNullOrEmpty(crmCase.Property.Description))
                     throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Property.Description is required within Confirm.");
@@ -143,6 +128,21 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_LOCATION", string.IsNullOrEmpty(crmCase.FurtherLocationInformation)
                     ? crmCase.Property.Description
                     : $"{crmCase.Property.Description} - {crmCase.FurtherLocationInformation}");
+            }
+            else if (crmCase.Street != null)
+            {
+                if (string.IsNullOrEmpty(crmCase.Street.Description))
+                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
+
+                var siteDetails = crmCase.Street.Description.Split(',');
+
+                formData.Add("CONF_SITE_CODE", crmCase.Street.USRN);
+                formData.Add("CONF_LOCATION", crmCase.FurtherLocationInformation);
+                formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
+                if (siteDetails.Length > 1)
+                    formData.Add("CONF_SITE_BUILDING", siteDetails[1].Trim());
+                if (siteDetails.Length > 2)
+                    formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
             }
 
             foreach (var key in formData.Keys)
