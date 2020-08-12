@@ -78,6 +78,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 crmCase.Customer.Title = "Mr";
                 crmCase.Customer.Surname = "ANON";
             }
+            
             if (crmCase.Customer.FullName.Length <= 30)
             {
                 formData.Add("CONF_CONTACT", crmCase.Customer.FullName);

@@ -22,6 +22,12 @@ jobs:
       # Test
       - name: Test project
         run: dotnet test
+
+      - name: Check if changes are tests
+        if: "!startsWith(github.event.head_commit.message, 'test:')"
+        run: |
+          echo "Changes are in tests no need to publish a new version"
+          exit 1
         
       # Pack
       - name: Package project
