@@ -40,8 +40,17 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     {"CONF_CUST_EMAIL", crmCase.Customer.Email},
                     {"CONF_DESC", crmCase.Description},
                     {"CONF_LOGGED_BY", "Lagan"},
-                    {"CONF_LOGGED_TIME", DateTime.Now.ToString()},
+                    {"CONF_LOGGED_TIME", DateTime.Now.ToString()}
                 };
+
+            if(!string.IsNullOrEmpty(configuration.XCoordinate) && !string.IsNullOrEmpty(configuration.YCoordinate))
+            {
+                formData.Add("CONF_X_COORD", configuration.XCoordinate);
+                formData.Add("CONF_Y_COORD", configuration.YCoordinate);
+            }
+
+            if(!string.IsNullOrEmpty(configuration.FloodingSourceReported))
+                formData.Add("CONF_ATTRIBUTE_FSRC_CODE", configuration.FloodingSourceReported);
 
             if (crmCase.IsSMBCEmployee)
             {

@@ -16,5 +16,8 @@
         public string FollowUp { get; set; }
         public string ClassCode { get; set; }
         public int EventId { get; set; }
+        public string XCoordinate { get; set; }
+        public string YCoordinate { get; set; }
+        public string FloodingSourceReported { get; set; }
     }
 }
