@@ -138,7 +138,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
             else if (crmCase.Street != null)
             {
                 if (string.IsNullOrEmpty(crmCase.Street.Description))
-                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
+                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Street.Description is required within Confirm.");
 
                 var siteDetails = crmCase.Street.Description.Split(',');
 
