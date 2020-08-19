@@ -49,9 +49,6 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_Y_COORD", configuration.YCoordinate);
             }
 
-            if(!string.IsNullOrEmpty(configuration.FloodingSourceReported))
-                formData.Add("CONF_ATTRIBUTE_FSRC_CODE", configuration.FloodingSourceReported);
-
             if (crmCase.IsSMBCEmployee)
             {
                 formData.Add("CONF_POC_CODE", "SHOT");
