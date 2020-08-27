@@ -49,9 +49,6 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_Y_COORD", configuration.YCoordinate);
             }
 
-            if(!string.IsNullOrEmpty(configuration.FloodingSourceReported))
-                formData.Add("CONF_ATTRIBUTE_FSRC_CODE", configuration.FloodingSourceReported);
-
             if (crmCase.IsSMBCEmployee)
             {
                 formData.Add("CONF_POC_CODE", "SHOT");
@@ -141,7 +138,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
             else if (crmCase.Street != null)
             {
                 if (string.IsNullOrEmpty(crmCase.Street.Description))
-                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
+                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Street.Description is required within Confirm.");
 
                 var siteDetails = crmCase.Street.Description.Split(',');
 
