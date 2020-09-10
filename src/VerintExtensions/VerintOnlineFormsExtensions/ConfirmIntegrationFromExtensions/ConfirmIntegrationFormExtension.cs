@@ -20,7 +20,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
         public static VerintOnlineFormRequest ToConfirmIntegrationFormCase(this Case crmCase, ConfirmIntegrationFormOptions configuration)
         {
             crmCase.EventCode = configuration.EventId;
-            
+
             var formData = new Dictionary<string, string>
                 {
                     {"CONF_SERVICE_CODE", configuration.ServiceCode},
@@ -78,23 +78,6 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 crmCase.Customer.Title = "Mr";
                 crmCase.Customer.Surname = "ANON";
             }
-            
-            if (crmCase.Customer.FullName.Length <= 30)
-            {
-                formData.Add("CONF_CONTACT", crmCase.Customer.FullName);
-            }
-            else if ((crmCase.Customer.Title + " " + crmCase.Customer.Surname).Trim().Length <= 30)
-            {
-                formData.Add("CONF_CONTACT", $"{crmCase.Customer.Title} {crmCase.Customer.Surname.Trim()}");
-            }
-            else if (crmCase.Customer.Forename.Length <= 30)
-            {
-                formData.Add("CONF_CONTACT", crmCase.Customer.Forename);
-            }
-            else
-            {
-                formData.Add("CONF_CONTACT", crmCase.Customer.FullName.Substring(0, 30));
-            }
 
             if (crmCase.Customer.Address != null)
             {
@@ -102,7 +85,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
 
                 var addressDetails = crmCase.Customer.Address.Description.Split(',');
-              
+
                 formData.Add("CONF_CUST_LOCALITY", addressDetails[0].Trim());
                 if (addressDetails.Length > 1)
                     formData.Add("CONF_CUST_TOWN", addressDetails[1].Trim());
