@@ -113,10 +113,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_CUST_BUILDING", addressDetails[0].Trim());
                 if (addressDetails.Length > 2)
                     formData.Add("CONF_CUST_TOWN", addressDetails[2].Trim());
-                if(!string.IsNullOrEmpty(crmCase.Customer.Address.Postcode))
-                    formData.Add("CONF_CUST_POSTCODE", crmCase.Customer.Address.Postcode);
-                else
-                    formData.Add("CONF_CUST_POSTCODE", addressDetails.Last().Trim());
+                formData.Add("CONF_CUST_POSTCODE", addressDetails.Last().Trim());
             }
 
             if (crmCase.Property != null)
