@@ -81,28 +81,6 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_METH_CODE", "WEB");
             }
 
-            if (string.IsNullOrEmpty(crmCase.Customer.FullName))
-            {
-                crmCase.Customer.Title = "Mr";
-                crmCase.Customer.Surname = "ANON";
-            }
-            
-            if (crmCase.Customer.FullName.Length <= 30)
-            {
-                formData.Add("CONF_CONTACT", crmCase.Customer.FullName);
-            }
-            else if ((crmCase.Customer.Title + " " + crmCase.Customer.Surname).Trim().Length <= 30)
-            {
-                formData.Add("CONF_CONTACT", $"{crmCase.Customer.Title} {crmCase.Customer.Surname.Trim()}");
-            }
-            else if (crmCase.Customer.Forename.Length <= 30)
-            {
-                formData.Add("CONF_CONTACT", crmCase.Customer.Forename);
-            }
-            else
-            {
-                formData.Add("CONF_CONTACT", crmCase.Customer.FullName.Substring(0, 30));
-            }
             if (crmCase.Customer.Address != null)
             {
                 if (string.IsNullOrEmpty(crmCase.Customer.Address.Description))
