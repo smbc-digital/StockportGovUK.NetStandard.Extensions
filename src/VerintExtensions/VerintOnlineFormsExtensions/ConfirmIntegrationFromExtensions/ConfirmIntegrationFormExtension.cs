@@ -1,13 +1,14 @@
 ﻿using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
 using StockportGovUK.NetStandard.Models.Verint;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
 {
     public static class ConfirmIntegrationFormExtension
     {
-        private const string VOFName = "confirm_integrationform";
+        private const string VOFName = "confirm_universalform";
 
         /// <summary>
         /// An extension method to create an instance of VerintOnlineFormRequest that will be used to
@@ -20,14 +21,15 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
         public static VerintOnlineFormRequest ToConfirmIntegrationFormCase(this Case crmCase, ConfirmIntegrationFormOptions configuration)
         {
             crmCase.EventCode = configuration.EventId;
-            
+
             var formData = new Dictionary<string, string>
                 {
                     {"CONF_SERVICE_CODE", configuration.ServiceCode},
                     {"CONF_SUBJECT_CODE", configuration.SubjectCode},
                     {"FOLLOW_UP_BY", configuration.FollowUp},
                     {"CboClassCode", configuration.ClassCode},
-                    {"CONF_CLASSIFICATION", configuration.ConfirmClassification},
+                    {"le_eventcode", configuration.EventId.ToString()},
+                    {"le_queue_complete", "AppsConfirmQueuePending"},
                     {"CONF_CASE_ID", crmCase.CaseReference},
                     {"CONF_CUST_REF", crmCase.Customer.CustomerReference},
                     {"CONF_CUST_TITLE", crmCase.Customer.Title},
@@ -38,9 +40,15 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     {"CONF_CUST_FAX", crmCase.Customer.FaxNumber},
                     {"CONF_CUST_EMAIL", crmCase.Customer.Email},
                     {"CONF_DESC", crmCase.Description},
-                    {"le_eventcode", configuration.EventId.ToString()},
-                    {"le_queue_complete", "AppsConfirmQueuePending"},
+                    {"CONF_LOGGED_BY", "Lagan"},
+                    {"CONF_LOGGED_TIME", DateTime.Now.ToString()}
                 };
+
+            if (!string.IsNullOrEmpty(configuration.XCoordinate) && !string.IsNullOrEmpty(configuration.YCoordinate))
+            {
+                formData.Add("CONF_X_COORD", configuration.XCoordinate);
+                formData.Add("CONF_Y_COORD", configuration.YCoordinate);
+            }
 
             if (crmCase.IsSMBCEmployee)
             {
@@ -95,29 +103,35 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
             {
                 formData.Add("CONF_CONTACT", crmCase.Customer.FullName.Substring(0, 30));
             }
-
             if (crmCase.Customer.Address != null)
             {
                 if (string.IsNullOrEmpty(crmCase.Customer.Address.Description))
                     throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
 
                 var addressDetails = crmCase.Customer.Address.Description.Split(',');
-              
-                formData.Add("CONF_CUST_LOCALITY", addressDetails[0].Trim());
-                if (addressDetails.Length > 1)
-                    formData.Add("CONF_CUST_TOWN", addressDetails[1].Trim());
+
+                formData.Add("CONF_CUST_BUILDING", addressDetails[0].Trim());
                 if (addressDetails.Length > 2)
-                    formData.Add("CONF_CUST_COUNTY", addressDetails[2].Trim());
-                if (addressDetails.Length > 3)
-                    formData.Add("CONF_CUST_POSTCODE", addressDetails[3].Trim());
+                    formData.Add("CONF_CUST_TOWN", addressDetails[2].Trim());
+                if(!string.IsNullOrEmpty(crmCase.Customer.Address.Postcode))
+                    formData.Add("CONF_CUST_POSTCODE", crmCase.Customer.Address.Postcode);
+                else
+                    formData.Add("CONF_CUST_POSTCODE", addressDetails.Last().Trim());
             }
 
             if (crmCase.Property != null)
             {
+                if (string.IsNullOrEmpty(crmCase.Property.Description))
+                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Property.Description is required within Confirm.");
+
+                var siteDetails = crmCase.Property.Description.Split(',');
+
                 formData.Add("CONF_SITE_CODE", crmCase.Property.USRN);
-                formData.Add("CONF_SITE_NAME", crmCase.Property.AddressLine1);
-                formData.Add("CONF_SITE_LOCALITY", crmCase.Property.AddressLine3);
-                formData.Add("CONF_SITE_TOWN", crmCase.Property.City);
+                formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
+                if (siteDetails.Length > 1)
+                    formData.Add("CONF_SITE_BUILDING", siteDetails[1].Trim());
+                if (siteDetails.Length > 2)
+                    formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
                 formData.Add("CONF_LOCATION", string.IsNullOrEmpty(crmCase.FurtherLocationInformation)
                     ? crmCase.Property.Description
                     : $"{crmCase.Property.Description} - {crmCase.FurtherLocationInformation}");
@@ -125,7 +139,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
             else if (crmCase.Street != null)
             {
                 if (string.IsNullOrEmpty(crmCase.Street.Description))
-                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
+                    throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Street.Description is required within Confirm.");
 
                 var siteDetails = crmCase.Street.Description.Split(',');
 
@@ -133,7 +147,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_LOCATION", crmCase.FurtherLocationInformation);
                 formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
                 if (siteDetails.Length > 1)
-                    formData.Add("CONF_SITE_LOCALITY", siteDetails[1].Trim());
+                    formData.Add("CONF_SITE_BUILDING", siteDetails[1].Trim());
                 if (siteDetails.Length > 2)
                     formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
             }

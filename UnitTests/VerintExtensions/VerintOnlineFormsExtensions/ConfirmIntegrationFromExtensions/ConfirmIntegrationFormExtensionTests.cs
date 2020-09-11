@@ -25,7 +25,30 @@ namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrat
 
             Assert.NotNull(result);
             Assert.NotEmpty(result.FormData);
-            Assert.Equal("confirm_integrationform", result.FormName);
+            Assert.Equal("confirm_universalform", result.FormName);
+        }
+
+        [Fact]
+        public void ToConfirmIntegrationFormCase_ShouldReturnPopulatedVerintOnlineFormRequest_WithX_AndY_Coordinate()
+        {
+            var caseLove = new Case
+            {
+                Customer = new Customer()
+            };
+
+            var configuration = new ConfirmIntegrationFormOptions
+            {
+                EventId = 1,
+                XCoordinate = "12345",
+                YCoordinate = "54321"
+            };
+
+            var result = caseLove.ToConfirmIntegrationFormCase(configuration);
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result.FormData);
+            Assert.True(result.FormData.ContainsKey("CONF_X_COORD"));
+            Assert.True(result.FormData.ContainsKey("CONF_Y_COORD"));
         }
 
         [Fact]
