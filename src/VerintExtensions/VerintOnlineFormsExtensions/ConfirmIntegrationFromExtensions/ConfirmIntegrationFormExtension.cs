@@ -11,7 +11,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
         private const string VOFName = "confirm_universalform";
 
         /// <summary>
-        /// An extension method to create an instance of VerintOnlineFormRequest, that will be used to
+        /// An extension method to create an instance of VerintOnlineFormRequest that will be used to
         /// generate an VerintOnlineForm of type ConfirmIntegrationForm when VerintOnlineFormController.Create
         /// is called in the verint-service.
         /// </summary>
@@ -86,8 +86,8 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 var address = crmCase.Customer.Address;
                 if (string.IsNullOrEmpty(address.Description))
                     throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
+                
                 var addressDetails = address.Description.Split(',');
-
                 formData.Add("CONF_CUST_BUILDING", addressDetails.First().Trim());
                 if (addressDetails.Length > 2)
                     formData.Add("CONF_CUST_TOWN", addressDetails[2].Trim());
