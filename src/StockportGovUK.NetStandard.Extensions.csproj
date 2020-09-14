@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="StockportGovUK.NetStandard.Models" Version="1.1.1-prerelease-20" />
+    <PackageReference Include="StockportGovUK.NetStandard.Models" Version="1.1.2" />
   </ItemGroup>
 
 </Project>
