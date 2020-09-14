@@ -2,6 +2,7 @@
 using StockportGovUK.NetStandard.Models.Verint;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
@@ -92,11 +93,10 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 if (addressDetails.Length > 2)
                     formData.Add("CONF_CUST_TOWN", addressDetails[2].Trim());
 
-                if (!string.IsNullOrEmpty(address.Postcode))
-                {
-                    formData.Add("CONF_CUST_POSTCODE", address.Postcode);
-                }
                
+               var postcode = addressDetails.FirstOrDefault(_ => Regex.IsMatch(_ , @"^(sK|Sk|SK|sk|M|m)[0-9][0-9A-Za-z]?\s?[0-9][A-Za-z]{2}"));
+               formData.Add("CONF_CUST_POSTCODE", postcode);
+                
             }
 
             if (crmCase.Property != null)
