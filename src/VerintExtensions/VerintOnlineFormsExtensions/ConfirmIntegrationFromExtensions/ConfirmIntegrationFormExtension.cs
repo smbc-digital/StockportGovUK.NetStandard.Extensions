@@ -83,12 +83,12 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
 
             if (crmCase.Customer.Address != null)
             {
-                if (string.IsNullOrEmpty(crmCase.Customer.Address.Description))
+                var address = crmCase.Customer.Address;
+                if (string.IsNullOrEmpty(address.Description))
                     throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
+                var addressDetails = address.Description.Split(',');
 
-                var addressDetails = crmCase.Customer.Address.Description.Split(',');
-
-                formData.Add("CONF_CUST_BUILDING", addressDetails[0].Trim());
+                formData.Add("CONF_CUST_BUILDING", addressDetails.First().Trim());
                 if (addressDetails.Length > 2)
                     formData.Add("CONF_CUST_TOWN", addressDetails[2].Trim());
                 formData.Add("CONF_CUST_POSTCODE", addressDetails.Last().Trim());
