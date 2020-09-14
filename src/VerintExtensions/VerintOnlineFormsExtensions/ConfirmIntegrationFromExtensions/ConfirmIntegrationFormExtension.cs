@@ -91,7 +91,12 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_CUST_BUILDING", addressDetails.First().Trim());
                 if (addressDetails.Length > 2)
                     formData.Add("CONF_CUST_TOWN", addressDetails[2].Trim());
-                formData.Add("CONF_CUST_POSTCODE", addressDetails.Last().Trim());
+
+                if (!string.IsNullOrEmpty(address.Postcode))
+                {
+                    formData.Add("CONF_CUST_POSTCODE", address.Postcode);
+                }
+               
             }
 
             if (crmCase.Property != null)
