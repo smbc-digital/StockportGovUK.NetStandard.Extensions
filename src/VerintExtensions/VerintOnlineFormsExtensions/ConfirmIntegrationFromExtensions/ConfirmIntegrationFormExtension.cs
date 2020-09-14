@@ -94,7 +94,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     formData.Add("CONF_CUST_TOWN", addressDetails[2].Trim());
 
                
-               var postcode = addressDetails.FirstOrDefault(_ => Regex.IsMatch(_ , @"^(sK|Sk|SK|sk|M|m)[0-9][0-9A-Za-z]?\s?[0-9][A-Za-z]{2}"));
+               var postcode = addressDetails.FirstOrDefault(_ => Regex.IsMatch(_ , @"(sK|Sk|SK|sk|M|m)[0-9][0-9A-Za-z]?\s?[0-9][A-Za-z]{2}")).Trim();
                formData.Add("CONF_CUST_POSTCODE", postcode);
                 
             }
