@@ -1,9 +1,10 @@
 ﻿using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
 using StockportGovUK.NetStandard.Models.Verint;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
+
 
 namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
 {
@@ -89,7 +90,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                     throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
                 
                 var addressDetails = address.Description.Split(',');
-                formData.Add("CONF_CUST_BUILDING", addressDetails.First().Trim());
+                formData.Add("CONF_CUST_STREET", addressDetails.First().Trim());
                 if (addressDetails.Length > 2)
                     formData.Add("CONF_CUST_TOWN", addressDetails[2].Trim());
 
