@@ -88,16 +88,15 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 var address = crmCase.Customer.Address;
                 if (string.IsNullOrEmpty(address.Description))
                     throw new Exception("ConfirmIntegrationFormExtension.ToConfirmIntegrationFormCase: Address.Description is required within Confirm.");
-                
+
                 var addressDetails = address.Description.Split(',');
                 formData.Add("CONF_CUST_STREET", addressDetails.First().Trim());
                 if (addressDetails.Length > 2)
                     formData.Add("CONF_CUST_TOWN", addressDetails[2].Trim());
 
-               
-               var postcode = addressDetails.FirstOrDefault(_ => Regex.IsMatch(_ , @"(sK|Sk|SK|sk|M|m)[0-9][0-9A-Za-z]?\s?[0-9][A-Za-z]{2}")).Trim();
-               formData.Add("CONF_CUST_POSTCODE", postcode);
-                
+                var postcode = addressDetails.FirstOrDefault(_ => Regex.IsMatch(_, @"(sK|Sk|SK|sk|M|m)[0-9][0-9A-Za-z]?\s?[0-9][A-Za-z]{2}")).Trim();
+                formData.Add("CONF_CUST_POSTCODE", postcode);
+
             }
 
             if (crmCase.Property != null)
@@ -110,7 +109,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_SITE_CODE", crmCase.Property.USRN);
                 formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
                 if (siteDetails.Length > 1)
-                    formData.Add("CONF_SITE_BUILDING", siteDetails[1].Trim());
+                    formData.Add("CONF_SITE_LOCALITY", siteDetails[1].Trim());
                 if (siteDetails.Length > 2)
                     formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
                 formData.Add("CONF_LOCATION", string.IsNullOrEmpty(crmCase.FurtherLocationInformation)
@@ -128,7 +127,7 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_LOCATION", crmCase.FurtherLocationInformation);
                 formData.Add("CONF_SITE_NAME", siteDetails[0].Trim());
                 if (siteDetails.Length > 1)
-                    formData.Add("CONF_SITE_BUILDING", siteDetails[1].Trim());
+                    formData.Add("CONF_SITE_LOCALITY", siteDetails[1].Trim());
                 if (siteDetails.Length > 2)
                     formData.Add("CONF_SITE_TOWN", siteDetails[2].Trim());
             }
