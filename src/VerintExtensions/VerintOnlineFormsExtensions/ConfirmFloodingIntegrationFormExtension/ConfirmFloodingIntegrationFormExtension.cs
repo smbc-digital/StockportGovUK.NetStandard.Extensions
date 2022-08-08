@@ -1,5 +1,5 @@
-using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
-using StockportGovUK.NetStandard.Models.Verint;
+using StockportGovUK.NetStandard.Gateways.Models.Verint;
+using StockportGovUK.NetStandard.Gateways.Models.Verint.VerintOnlineForm;
 
 namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
 {
@@ -19,13 +19,13 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
         {
             var baseCase = crmCase.ToConfirmIntegrationFormCase(configuration);
 
-            if(!string.IsNullOrEmpty(configuration.FloodingSourceReported))
+            if (!string.IsNullOrEmpty(configuration.FloodingSourceReported))
                 baseCase.FormData.Add("CONF_ATTRIBUTE_FSRC_CODE", configuration.FloodingSourceReported);
 
-            if(!string.IsNullOrEmpty(configuration.LocationOfFlooding))
+            if (!string.IsNullOrEmpty(configuration.LocationOfFlooding))
                 baseCase.FormData.Add("CONF_ATTRIBUTE_FLOC_CODE", configuration.LocationOfFlooding);
 
-            if(!string.IsNullOrEmpty(configuration.DomesticOrCommercial))
+            if (!string.IsNullOrEmpty(configuration.DomesticOrCommercial))
                 baseCase.FormData.Add("CONF_ATTRIBUTE_FDOC_CODE", configuration.DomesticOrCommercial);
 
             return baseCase;

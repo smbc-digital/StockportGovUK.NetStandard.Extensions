@@ -1,10 +1,9 @@
-﻿using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
-using StockportGovUK.NetStandard.Models.Verint;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-
+using StockportGovUK.NetStandard.Gateways.Models.Verint;
+using StockportGovUK.NetStandard.Gateways.Models.Verint.VerintOnlineForm;
 
 namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
 {
