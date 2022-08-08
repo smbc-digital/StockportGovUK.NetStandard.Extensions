@@ -1,19 +1,21 @@
 ﻿using StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmGridsIntegrationFormExtention.cs;
 using StockportGovUK.NetStandard.Gateways.Models.Verint;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
-namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions {
-    public class ConfirmGridsIntegrationFormExtensionTests {
+namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
+{
+    public class ConfirmGridsIntegrationFormExtensionTests
+    {
         [Fact]
-        public void ToConfirmGridsIntegrationFormCase_ShouldReturnPopulatedVerintOnlineFormRequest_With_GridData() {
-            var caseLove = new Case {
+        public void ToConfirmGridsIntegrationFormCase_ShouldReturnPopulatedVerintOnlineFormRequest_With_GridData()
+        {
+            var caseLove = new Case
+            {
                 Customer = new Customer()
             };
 
-            var configuration = new ConfirmGridsIntegrationFormOptions {
+            var configuration = new ConfirmGridsIntegrationFormOptions
+            {
                 EventId = 1,
                 XCoordinate = "12345",
                 YCoordinate = "54321",
