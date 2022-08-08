@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions;
-using StockportGovUK.NetStandard.Models.Verint;
+using StockportGovUK.NetStandard.Gateways.Models.Verint;
 using Xunit;
 
 namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
