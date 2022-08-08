@@ -4,7 +4,7 @@ using StockportGovUK.NetStandard.Gateways.Models.Verint.VerintOnlineForm;
 
 namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmGridsIntegrationFormExtention.cs
 {
-    public static class ConfirmGridsIntegrationFormExtention
+    public static class ConfirmGridsIntegrationFormExtension
     {
         /// <summary>
         /// An extension method to create an instance of VerintOnlineFormRequest that will be used to
