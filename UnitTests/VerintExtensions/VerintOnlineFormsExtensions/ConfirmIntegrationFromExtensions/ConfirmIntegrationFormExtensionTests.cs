@@ -2,6 +2,7 @@
 using System.Linq;
 using StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions;
 using StockportGovUK.NetStandard.Gateways.Models.Verint;
+using StockportGovUK.NetStandard.Gateways.Models.Verint.Enums;
 using Xunit;
 
 namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
@@ -45,17 +46,17 @@ namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrat
         }
 
         [Theory]
-        [InlineData("EMAIL_IN", "Email", "EMAI")]
-        [InlineData("VOICE_IN", "Telephone", "TELE")]
-        [InlineData("FACE_TO_FACE", "Person", "PERS")]
-        [InlineData("WEB", "Web/Online Form", "WEB")]
-        public void ToConfirmIntegrationFormCase_GivenDifferentSmbcChannels_ShouldAddRelevantCaseFields(string channel, string methodName, string methodCode)
+        [InlineData(EChannel.Email, "Email", "EMAI")]
+        [InlineData(EChannel.Voice, "Telephone", "TELE")]
+        [InlineData(EChannel.FaceToFace, "Person", "PERS")]
+        [InlineData(EChannel.Web, "Web/Online Form", "WEB")]
+        public void ToConfirmIntegrationFormCase_GivenDifferentSmbcChannels_ShouldAddRelevantCaseFields(EChannel channel, string methodName, string methodCode)
         {
             var caseLove = new Case
             {
                 Customer = new Customer(),
                 IsSMBCEmployee = true,
-                SMBCChannel = channel
+                Channel = channel
             };
 
             var configuration = new ConfirmIntegrationFormOptions();
