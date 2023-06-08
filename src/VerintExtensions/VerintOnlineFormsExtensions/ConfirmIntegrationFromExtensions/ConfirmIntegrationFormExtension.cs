@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using StockportGovUK.NetStandard.Gateways.Models.Verint;
+using StockportGovUK.NetStandard.Gateways.Models.Verint.Enums;
 using StockportGovUK.NetStandard.Gateways.Models.Verint.VerintOnlineForm;
 
 namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrationFromExtensions
@@ -56,21 +57,21 @@ namespace StockportGovUK.NetStandard.Extensions.VerintExtensions.VerintOnlineFor
                 formData.Add("CONF_POC_CODE", "SHOT");
                 formData.Add("CONF_POC_NAME", "Customer Service Centre");
 
-                switch (crmCase.SMBCChannel)
+                switch (crmCase.Channel)
                 {
-                    case "EMAIL_IN":
+                    case EChannel.Email:
                         formData.Add("CONF_METH_NAME", "Email");
                         formData.Add("CONF_METH_CODE", "EMAI");
                         break;
-                    case "VOICE_IN":
+                    case EChannel.Voice:
                         formData.Add("CONF_METH_NAME", "Telephone");
                         formData.Add("CONF_METH_CODE", "TELE");
                         break;
-                    case "FACE_TO_FACE":
+                    case EChannel.FaceToFace:
                         formData.Add("CONF_METH_NAME", "Person");
                         formData.Add("CONF_METH_CODE", "PERS");
                         break;
-                    case "WEB":
+                    case EChannel.Web:
                         formData.Add("CONF_METH_NAME", "Web/Online Form");
                         formData.Add("CONF_METH_CODE", "WEB");
                         break;
