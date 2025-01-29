@@ -88,13 +88,69 @@ namespace UnitTests.VerintExtensions.VerintOnlineFormsExtensions.ConfirmIntegrat
         }
 
         [Fact]
-        public void ToConfirmIntegrationFormCase_GivenAddressDescriptionIsNull_ShouldThrowException()
+        public void ToConfirmIntegrationFormCase_GivenAddressIsNotNull_AndAutomatic_ShouldNameCaseFields()
         {
             var caseLove = new Case
             {
                 Customer = new Customer
                 {
-                    Address = new Address()
+                    Address = new Address
+                    {
+                        Description = "1,2,3,SK1 3XE",
+                        UPRN = "uprn"
+                    }
+                }
+            };
+
+            var configuration = new ConfirmIntegrationFormOptions();
+
+            var result = caseLove.ToConfirmIntegrationFormCase(configuration);
+
+            Assert.NotEmpty(result.FormData);
+            Assert.True(result.FormData.Keys.Contains("CONF_CUST_LOCALITY"));
+            Assert.True(result.FormData.Keys.Contains("CONF_CUST_TOWN"));
+            Assert.True(result.FormData.Keys.Contains("CONF_CUST_STREET"));
+            Assert.True(result.FormData.Keys.Contains("CONF_CUST_POSTCODE"));
+        }
+
+        [Fact]
+        public void ToConfirmIntegrationFormCase_GivenAddressIsNotNull_AndManual_ShouldNameCaseFields()
+        {
+            var caseLove = new Case
+            {
+                Customer = new Customer
+                {
+                    Address = new Address
+                    {
+                        AddressLine1 = "1",
+                        City = "3",
+                        Postcode = "SK1 3XE"
+                    }
+                }
+            };
+
+            var configuration = new ConfirmIntegrationFormOptions();
+
+            var result = caseLove.ToConfirmIntegrationFormCase(configuration);
+
+            Assert.NotEmpty(result.FormData);
+            Assert.False(result.FormData.Keys.Contains("CONF_CUST_LOCALITY"));
+            Assert.True(result.FormData.Keys.Contains("CONF_CUST_TOWN"));
+            Assert.True(result.FormData.Keys.Contains("CONF_CUST_STREET"));
+            Assert.True(result.FormData.Keys.Contains("CONF_CUST_POSTCODE"));
+        }
+
+        [Fact]
+        public void ToConfirmIntegrationFormCase_GivenAddressDescriptionIsNull_AndIsAutomaticAddress_ShouldThrowException()
+        {
+            var caseLove = new Case
+            {
+                Customer = new Customer
+                {
+                    Address = new Address
+                    {
+                        UPRN = "uprn"
+                    }
                 }
             };
 
